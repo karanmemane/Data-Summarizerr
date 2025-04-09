@@ -1,0 +1,364 @@
+/* ========== General Reset ========== */
+/* Removes default margins, padding, and makes layout consistent */
+* {
+  margin: 0; /* Removes space around elements */
+  padding: 0; /* Removes space inside elements */
+  box-sizing: border-box; /* Ensures width & height include padding/borders */
+}
+
+/* ========== Body Styling ========== */
+/* Sets the overall look of the page */
+body {
+  font-family: Arial, sans-serif; /* Sets the text style */
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee); /* Light gradient background */
+  color: #333; /* Dark gray text */
+  display: flex; /* Uses flexible layout */
+  flex-direction: column; /* Stacks items vertically */
+  align-items: center; /* Centers everything horizontally */
+  font-size: 20px; /* Makes text slightly bigger */
+}
+
+/* ========== Main Container ========== */
+/* Holds everything on the page */
+.container {
+  width: 300%; /* Makes container larger */
+  max-width: 1200px; /* Ensures it doesn’t stretch too much */
+  display: flex; /* Uses flexible layout */
+  flex-direction: column; /* Arranges content vertically */
+  min-height: 100vh; /* Makes sure it fills the screen */
+}
+
+/* ========== Header (Top Bar) ========== */
+/* HEADER STYLING */
+/* HEADER */
+.header {
+  background: #e0f7fa; /* Light blue background */
+  padding: 20px 50px; /* Increased padding for spacing */
+  display: flex; /* Enables flexbox */
+  justify-content: space-between; /* Positions items at left, center, and right */
+  align-items: center; /* Centers items vertically */
+  width: 100vw; /* Full width */
+  height: 80px; /* Fixed height */
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.12); /* Adds shadow */
+  position: fixed; /* Sticks to the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensures it's above other content */
+}
+
+/* Push down the container so it doesn't go under the fixed header */
+.container {
+  width: 150%; /* Makes it span the full width of the page */
+  max-width: 1600px; /* Allows it to be larger */
+  min-width: 1200px; /* Ensures it doesn't shrink too much */
+  margin: 90px auto 20px; /* Prevents overlap with header */
+  padding: 20px; /* Adds internal spacing */
+}
+
+
+
+/* Wrapper to ensure content is properly aligned */
+.header-content {
+  display: flex;
+  width: 100%;
+  max-width: 1400px; /* Prevents header content from stretching too much on large screens */
+  margin: 0 auto; /* Centers the content */
+  align-items: center;
+}
+
+/* LOGO - Positioned on the left */
+.logo {
+  font-size: 32px; /* Larger text for better visibility */
+  font-weight: bold;
+  color: #00796b;
+  flex: 1; /* Allows it to take some space */
+  text-align: left; /* Ensures it stays on the left */
+}
+
+/* NAVIGATION - Positioned in the center */
+.nav-container {
+  flex: 2; /* Takes up more space */
+  display: flex;
+  justify-content: center; /* Centers the navigation */
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  gap: 30px; /* Spacing between links */
+}
+
+/* Links styling */
+.nav-links a {
+  color: #00796b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 22px;
+  padding: 10px 15px;
+}
+
+/* USER OPTIONS - Positioned on the right */
+.user-options {
+  flex: 1; /* Allows space for user actions */
+  display: flex;
+  justify-content: flex-end; /* Pushes it to the right */
+  gap: 15px;
+}
+
+/* Login Button */
+.auth-btn {
+  background: #00796b;
+  color: white;
+  padding: 12px 22px;
+  font-size: 22px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  background: #004d40;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* ========== Main Content (Input & Output Sections) ========== */
+.main-content {
+  display: flex; /* Uses flexbox */
+  justify-content: center; /* Centers everything */
+  align-items: flex-start; /* Aligns content at the top */
+  width: 800px; /* Stretches across the screen */
+  flex-grow: 1; /* Fills extra space */
+  padding-block-start: 2%; /* Reduced top padding (was 10%) */
+  padding-block-end: 0.2%;
+}
+
+/* Wrapper that holds both input and output sections */
+.content-wrapper {
+  display: flex; /* Makes input & output sit side by side */
+  justify-content: space-between; /* Even spacing without pushing too far */
+  align-items: flex-start; /* Keeps alignment at the top */
+  width: 100%; /* Adjusted width for better spacing */
+  gap: 40px; /* Adjusted space between input & output */
+  margin: 220px; /* Centers the entire wrapper */
+  margin-top: -20px; /* Moves the content wrapper slightly up */
+  margin-bottom: 20px;
+}
+
+
+/* ========== Input & Output Sections (Smaller Containers) ========== */
+.input-section,
+.output-section {
+  background: #ffffff; /* White background */
+  padding: 150px; /* Slightly reduced padding */
+  border-radius: 10px; /* Rounds corners */
+  flex: 1; /* Equal width for both sections */
+  max-width: 90%; /* Reduced max width */
+  min-width: 90%; /* Reduced minimum width */
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stacks items vertically */
+  gap: 25px; /* Slightly reduced spacing */
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  height: 700px; /* Reduced height */
+}
+
+
+/* ========== Input Section (Left Box) ========== */
+.input-section {
+  background: #ffffff; /* White background */
+  padding: 25px; /* Space inside */
+  border-radius: 10px; /* Rounds corners */
+  flex: 1; /* Makes it take equal space */
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stacks items vertically */
+  gap: 18px; /* Space between elements */
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  width: 900px; /* Increased container width */
+  height: 550px; /* Increased container height */
+  margin-left: 1%;
+}
+
+/* ========== Mode Selection Buttons ========== */
+.mode-buttons {
+  display: flex; /* Places buttons in a row */
+  justify-content: space-evenly; /* Spreads them out */
+}
+
+.mode-buttons button {
+  flex-grow: 1; /* Makes them expand */
+  padding: 8px; /* Keeps buttons normal size */
+  font-size: 18px; /* Keeps text normal size */
+  border: none; /* Removes borders */
+  background: #00796b; /* Green button */
+  color: white; /* White text */
+  cursor: pointer; /* Shows hand cursor */
+  border-radius: 24px; /* Rounds corners */
+}
+
+.mode-buttons button:hover {
+  background: #004d40; /* Darker on hover */
+}
+
+/* ========== Input Text Area ========== */
+.text-input {
+  width: 100%; /* Fills the section */
+  height: 350px; /* Keeps input size reasonable */
+  padding: 12px; /* Space inside */
+  font-size: 18px; /* Keeps text readable */
+  border: 2px solid #00796b; /* Green border */
+  border-radius: 8px; /* Rounds edges */
+  resize: none; /* Prevents resizing */
+}
+
+/* ========== Input Buttons (Submit & Clear) ========== */
+.input-controls {
+  display: flex; /* Puts buttons in a row */
+  justify-content: space-between; /* Spreads them apart */
+}
+
+.input-controls button {
+  background: #00796b; /* Green button */
+  color: white; /* White text */
+  padding: 12px 16px; /* Normal button size */
+  font-size: 18px; /* Keeps text normal size */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Hand cursor */
+}
+
+.input-controls button:hover {
+  background: #004d40; /* Darker green when hovered */
+}
+
+/* ========== Output Section (Right Box) ========== */
+.output-section {
+  background: #ffffff; /* White background */
+  padding: 35px; /* Space inside */
+  border-radius: 10px; /* Rounded corners */
+  flex: 1; /* Takes equal space */
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stacks items */
+  gap: 18px; /* Space between items */
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  width: 1600px; /* Increased container width */
+  height: 550px; /* Increased container height */
+}
+
+/* ========== Output Text Box ========== */
+.text-output {
+  width: 100%; /* Fills section */
+  height: 350px; /* Keeps output size normal */
+  padding: 12px; /* Space inside */
+  font-size: 18px; /* Keeps text readable */
+  border: 2px solid #00796b; /* Green border */
+  border-radius: 8px; /* Rounded edges */
+  resize: none; /* No resizing */
+  background: #f9f9f9; /* Light gray background */
+}
+
+/* ========== Summarize, Copy & Download Buttons ========== */
+.output-controls {
+  display: flex; /* Aligns buttons in a row */
+  justify-content: space-between; /* Evenly distributes buttons */
+  gap: 10px; /* Adds space between buttons */
+  margin-top: 0px; /* Space above the buttons */
+}
+
+/* General Button Styling */
+.output-controls button {
+  background: #091413; /* Green color */
+  color: white; /* White text */
+  padding: 12px 20px; /* Normal button size */
+  font-size: 18px; /* Readable text */
+  border: black; /* Removes borders */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Hand cursor */
+  transition: 0.3s ease-in-out; /* Smooth effect */
+}
+
+/* Hover Effect */
+.output-controls button:hover {
+  background: #004d40; /* Darker green when hovered */
+}
+
+/* Summarize Button - Slightly Bigger */
+.summarize-btn {
+  flex-grow: 1; /* Makes it slightly wider */
+  font-weight: normal; /* Makes text stand out */
+}
+
+/* Copy & Download Buttons - Smaller */
+.copy-btn,
+.download-btn {
+  flex-grow: 1; /* Normal size */
+  background: #c7ede9; /* Teal color */
+}
+
+/* Copy & Download Hover Effect */
+.copy-btn:hover,
+.download-btn:hover {
+  background: #bae4e0; /* Darker teal */
+}
+
+
+/* ========== Contact Page Styles ========== */
+
+/* Contact Box */
+.contact-box {
+  background: #ffffff; /* White background */
+  padding: 25px; /* Internal spacing */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  text-align: center; /* Centers content */
+  width: 80%; /* Adjust width */
+  max-width: 800px; /* Prevents it from stretching too much */
+  margin: auto; /* Centers the box */
+}
+
+/* Contact Title */
+.contact-title {
+  font-size: 28px; /* Large text */
+  color: #00796b; /* Teal color */
+  margin-bottom: 10px; /* Space below title */
+}
+
+/* Contact Description */
+.contact-text {
+  font-size: 18px; /* Readable text */
+  margin-bottom: 15px; /* Space below paragraph */
+}
+
+/* Contact List */
+.contact-list {
+  list-style-type: none; /* Removes default bullets */
+  font-size: 18px; /* Adjust text size */
+}
+
+.contact-list li {
+  margin-bottom: 8px; /* Adds spacing between items */
+}
+
+/* Contact Links */
+.contact-link {
+  color: #00796b; /* Teal color */
+  text-decoration: none; /* Removes underline */
+  font-weight: bold; /* Makes it stand out */
+}
+
+.contact-link:hover {
+  color: #004d40; /* Darker teal on hover */
+}
+
+/* ========== Footer ========== */
+.footer {
+  background: #e0f7fa; /* Light blue */
+  text-align: center; /* Centers text */
+  padding: 15px; /* Internal spacing */
+  font-size: 16px; /* Text size */
+  margin-top: 30px; /* Space before footer */
+  width: 100%; /* Full width */
+}
+

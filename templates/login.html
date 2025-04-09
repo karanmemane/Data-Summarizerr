@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <style>
+        /* Background */
+        body {
+            background: linear-gradient(135deg, #ffafcc, #9d6cff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 360px;
+            padding: 30px;
+            background: #5a189a;
+            border-radius: 12px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container h2 {
+            color: #ffafcc;
+            margin-bottom: 15px;
+        }
+
+        /* Input Fields */
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            color: white;
+        }
+
+        .form-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Buttons */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background: #ff77a9;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .form-container button:hover {
+            background: #e05690;
+        }
+
+        .toggle-link {
+            display: block;
+            margin-top: 15px;
+            color: #ffafcc;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .error-msg {
+            color: #ffddcc;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2 id="form-title">Sign In</h2>
+
+        <!-- Sign-in Form -->
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p id="login-error" class="error-msg"></p>
+        </form>
+
+        <!-- Sign-up Form (Initially Hidden) -->
+        <form id="signup-form" class="hidden">
+            <input type="text" id="signup-name" placeholder="Full Name" required>
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <input type="password" id="signup-confirm-password" placeholder="Re-enter Password" required>
+            <button type="submit">Register</button>
+            <p id="signup-error" class="error-msg"></p>
+        </form>
+
+        <!-- Toggle between forms -->
+        <a id="toggle-signup" class="toggle-link">Don't have an account? Register</a>
+        <a id="toggle-login" class="toggle-link hidden">Already have an account? Sign In</a>
+
+        <button onclick="window.location.href='/'" style="background:#6c757d;">Back to Home</button>
+    </div>
+
+    <!-- Firebase SDK (Modules) -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzlGyhwQVEvCdclOXX-PWCNXwGDka_2Rk",
+            authDomain: "data-summarizerr.firebaseapp.com",
+            projectId: "data-summarizerr",
+            storageBucket: "data-summarizerr.appspot.com", // ✅ Fixed storageBucket
+            messagingSenderId: "1062246694768",
+            appId: "1:1062246694768:web:b454d990899ddb735e19b5",
+            measurementId: "G-R3XM8VR73G"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.getElementById("login-form");
+            const signupForm = document.getElementById("signup-form");
+            const toggleSignup = document.getElementById("toggle-signup");
+            const toggleLogin = document.getElementById("toggle-login");
+            const formTitle = document.getElementById("form-title");
+
+            // Toggle between login and signup forms
+            toggleSignup.addEventListener("click", function () {
+                loginForm.classList.add("hidden");
+                signupForm.classList.remove("hidden");
+                toggleSignup.classList.add("hidden");
+                toggleLogin.classList.remove("hidden");
+                formTitle.innerText = "Register";
+            });
+
+            toggleLogin.addEventListener("click", function () {
+                loginForm.classList.remove("hidden");
+                signupForm.classList.add("hidden");
+                toggleSignup.classList.remove("hidden");
+                toggleLogin.classList.add("hidden");
+                formTitle.innerText = "Sign In";
+            });
+
+            // Login
+            loginForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const email = document.getElementById("login-email").value;
+                const password = document.getElementById("login-password").value;
+
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    window.location.href = "/";
+                } catch (error) {
+                    document.getElementById("login-error").textContent = error.message;
+                }
+            });
+
+            // Signup
+            signupForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const email = document.getElementById("signup-email").value;
+                const password = document.getElementById("signup-password").value;
+                const confirmPassword = document.getElementById("signup-confirm-password").value;
+
+                if (password !== confirmPassword) {
+                    document.getElementById("signup-error").textContent = "Passwords do not match.";
+                    return;
+                }
+
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    window.location.href = "/";
+                } catch (error) {
+                    document.getElementById("signup-error").textContent = error.message;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

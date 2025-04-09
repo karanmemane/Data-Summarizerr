@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History - Data Summarizer</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      color: #333;
+      text-align: center;
+    }
+
+    /* Header */
+    header {
+      background: #e0f2f1;
+      padding: 20px 0;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin: 0;
+      color: #00796b;
+    }
+
+    nav a {
+      color: #00796b;
+      text-decoration: none;
+      font-size: 18px;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    /* Main Content */
+    main {
+      max-width: 700px;
+      margin: 120px auto 50px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    h2 {
+      color: #00796b;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* History List */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #e0f2f1;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s ease;
+    }
+
+    li:hover {
+      background: #b2dfdb;
+    }
+
+    /* Time and Mode Styling */
+    .history-time {
+      font-size: 16px;
+      color: #00796b;
+      flex-basis: 25%;
+      text-align: left;
+    }
+
+    .history-input {
+      font-size: 18px;
+      color: #00796b;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .history-mode {
+      font-size: 16px;
+      color: #00796b;
+      flex-basis: 20%;
+      text-align: right;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #e0f7fa;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #4dd0e1;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 0.5rem;
+    }
+
+    .close-modal {
+      color: #00796b;
+      float: right;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-modal:hover {
+      color: #004d40;
+    }
+
+    /* Footer */
+    footer {
+      background: #e0f2f1;
+      color: #00796b;
+      padding: 15px;
+      font-size: 16px;
+      margin-top: 50px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <h1>Data Summarizer</h1>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/history">History</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <h2>📜 History</h2>
+    <ul id="historyContainer"></ul>
+    <p id="noHistoryMessage" style="color: gray; display: none;">No history available yet.</p>
+  </main>
+
+  <!-- Modal for Summary -->
+  <div id="summaryModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close-modal">&times;</span>
+      <h3 style="color: #00796b;">Summary</h3>
+      <p id="modalSummary"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Data Summarizer. All rights reserved.
+  </footer>
+
+  <script>
+    // Modal functionality
+    const modal = document.getElementById("summaryModal");
+    const modalSummary = document.getElementById("modalSummary");
+    const closeModal = document.getElementById("closeModal");
+
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    // Function to render history items
+    function renderHistory(historyData) {
+      const container = document.getElementById("historyContainer");
+      const noHistoryMsg = document.getElementById("noHistoryMessage");
+      container.innerHTML = ""; // Clear previous items
+
+      if (!historyData || historyData.length === 0) {
+        noHistoryMsg.style.display = "block";
+        return;
+      } else {
+        noHistoryMsg.style.display = "none";
+      }
+
+      historyData.forEach(item => {
+        let inputPreview = item.input.includes("Uploaded file:") 
+          ? item.input.replace("Uploaded file: ", "") 
+          : item.input.length > 20 ? item.input.slice(0, 20) + "..." : item.input;
+
+        // Format timestamp into a readable date
+        const timestamp = new Date(item.timestamp);
+        const formattedTime = timestamp.toLocaleString();
+
+        // Add mode information (e.g., "short", "medium", "long")
+        const mode = item.mode || "Unknown Mode";
+
+        const li = document.createElement("li");
+        
+        // Structure history item with time, input preview, and mode
+        li.innerHTML = `
+          <span class="history-time">${formattedTime}</span>
+          <span class="history-input">${inputPreview}</span>
+          <span class="history-mode">${mode}</span>
+        `;
+        li.setAttribute("data-summary", item.summary);
+
+        li.onclick = function() {
+          modalSummary.textContent = this.getAttribute("data-summary");
+          modal.style.display = "block";
+        };
+
+        container.appendChild(li);
+      });
+    }
+
+    // Fetch and render history data from the API
+    function fetchHistory() {
+      fetch('/api/history', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+          console.log("User history:", data);
+          renderHistory(data);
+        })
+        .catch(error => console.error("Error fetching history:", error));
+    }
+
+    // Load history on page load
+    document.addEventListener("DOMContentLoaded", fetchHistory);
+  </script>
+
+</body>
+</html>

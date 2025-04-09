@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Data Summarizer</title>
+  <style>
+    /* General Styling */
+    body {
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      color: #333;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    /* Header */
+    header {
+      background-color: #e0f2f1;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: bold;
+      color: #00796b;
+      margin: 0;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #00796b;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0 20px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    nav a:hover {
+      color: #004d40;
+    }
+
+    /* Main Content */
+    main {
+      width: 90%;
+      max-width: 1000px;
+      margin: 140px auto 50px;
+      padding: 15px;
+    }
+
+    /* Timeline Styling */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 60px auto;
+    }
+
+    .timeline::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      background-color: #00796b;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+
+    .timeline-box {
+      position: relative;
+      width: 45%;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      font-size: 18px;
+      text-align: left;
+    }
+
+    .left-box {
+      left: 0;
+    }
+
+    .right-box {
+      left: 52%;
+    }
+
+    .timeline-box::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      width: 22px;
+      height: 22px;
+      background-color: #00796b;
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+
+    .left-box::after {
+      right: -14px;
+    }
+
+    .right-box::after {
+      left: -14px;
+    }
+
+    /* FAQ Styling */
+    details {
+      background: #f1f1f1;
+      padding: 18px;
+      margin-top: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+    }
+
+    summary {
+      font-weight: bold;
+    }
+
+    details:hover {
+      background: #d0f0e0;
+    }
+
+    /* Footer */
+    footer {
+      background: #e0f2f1;
+      text-align: center;
+      padding: 18px;
+      font-size: 18px;
+      color: #00796b;
+      margin-top: 50px;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 850px) {
+      .timeline::after {
+        left: 20px;
+      }
+      .timeline-box {
+        width: 85%;
+        left: 8%;
+        font-size: 16px;
+      }
+      .timeline-box::after {
+        left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Data Summarizer</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/history">History</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <h2 style="font-size: 32px; margin-bottom: 35px;">About Data Summarizer</h2>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <div class="timeline-box left-box">
+        <h3>Revolutionize the Way You Summarize Text</h3>
+        <p>Transform lengthy documents into concise, digestible summaries using advanced NLP.</p>
+      </div>
+
+      <div class="timeline-box right-box">
+        <h3>What can you do with our Summarizer tool?</h3>
+        <ul>
+          <li>Extract key insights from complex texts</li>
+          <li>Enhance productivity and save time</li>
+          <li>Streamline research and study sessions</li>
+          <li>Generate engaging summaries</li>
+        </ul>
+      </div>
+
+      <div class="timeline-box left-box">
+        <h3>How to use Data Summarizer?</h3>
+        <ol>
+          <li>Paste your text or upload your document.</li>
+          <li>Adjust the summary length using the slider.</li>
+          <li>Select your desired format.</li>
+          <li>Click "Summarize!" to generate your summary.</li>
+        </ol>
+      </div>
+
+      <div class="timeline-box right-box">
+        <h3>Who can use Summarizer?</h3>
+        <ul>
+          <li>Professionals</li>
+          <li>Researchers</li>
+          <li>Students</li>
+          <li>Content creators</li>
+        </ul>
+      </div>
+    </div>
+    <h2 style="font-size: 30px; margin-top: 70px;">❓ Frequently Asked Questions</h2>
+
+    <div class="faq-container">
+      <details>
+        <summary>🚀 How fast is the summarization process?</summary>
+        <p>Our summarization engine is powered by advanced Natural Language Processing (NLP) algorithms, allowing it to generate summaries in just a few seconds. The speed depends on the length of the text, but most results are available instantly.</p>
+      </details>
+    
+      <details>
+        <summary>🎯 Can I adjust the summary length?</summary>
+        <p>Yes! You can customize the summary length using our interactive slider. Choose between Short, Medium, or Long summaries to get the right level of detail based on your needs.</p>
+      </details>
+    
+      <details>
+        <summary>🌍 Which languages are supported?</summary>
+        <p>Our summarizer currently supports multiple languages, including English, Spanish, French, German, and more. We are constantly working to add additional language support for a more inclusive experience.</p>
+      </details>
+    
+      <details>
+        <summary>📌 Who can benefit from using Data Summarizer?</summary>
+        <p>Our tool is designed for a wide range of users, including:</p>
+        <ul>
+          <li>👩‍💼 Professionals – Quickly extract key points from reports and articles.</li>
+          <li>🎓 Students – Save time summarizing textbooks and research papers.</li>
+          <li>📝 Content creators – Generate engaging content summaries for blogs and social media.</li>
+          <li>🔬 Researchers – Condense complex studies into easily digestible summaries.</li>
+        </ul>
+      </details>
+    
+      <details>
+        <summary>🛠️ Can I summarize entire PDFs or documents?</summary>
+        <p>Yes! Our tool allows you to upload PDFs, Word documents, or plain text files for summarization. Simply drag and drop your file, and our system will process it instantly.</p>
+      </details>
+    
+    
+      <details>
+        <summary>💰 Is Data Summarizer free to use?</summary>
+        <p>Yes! We offer a free version with basic summarization features. For advanced options, including AI-powered summarization, additional formats, and language models, we offer a premium version.</p>
+      </details>
+    
+      <details>
+        <summary>📞 How can I get support?</summary>
+        <p>If you need help or have any questions, you can contact our support team via email at support@datasummarizer.com or visit our Help Center for FAQs and tutorials.</p>
+      </details>
+    </div>
+    
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Data Summarizer. All rights reserved.
+  </footer>
+
+</body>
+</html>

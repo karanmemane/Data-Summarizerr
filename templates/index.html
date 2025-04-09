@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Summarizer</title>
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+  <!-- Firebase CDN Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBzlGyhwQVEvCdclOXX-PWCNXwGDka_2Rk",
+      authDomain: "data-summarizerr.firebaseapp.com",
+      projectId: "data-summarizerr",
+      storageBucket: "data-summarizerr.firebasestorage.app",
+      messagingSenderId: "1062246694768",
+      appId: "1:1062246694768:web:b454d990899ddb735e19b5",
+      measurementId: "G-R3XM8VR73G"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <h1 class="logo">Data Summarizer</h1>
+        <nav class="nav-links">
+          <a href="/index">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          <a href="/history">History</a>
+        </nav>
+        <div id="userMenu" class="user-menu">
+          {% if uid %}
+              <button id="openAuth" onclick="window.location.href='/user'" class="auth-btn">User</button>
+          {% else %}
+              <button id="openAuth" onclick="window.location.href='/login'" class="auth-btn">Sign In</button>
+          {% endif %}
+        </div>
+        
+      
+      
+      </div>
+    </header>
+    
+    <main class="main-content">
+      <div class="content-wrapper">
+        <section class="input-section">
+          <div class="mode-buttons">
+            <button onclick="setMode('paragraph', this)">📄 Paragraph</button>
+            <button onclick="setMode('bullet', this)">🔘 Bullet Points</button>
+            <button onclick="setMode('change_language', this)">🌍 Change Language</button>
+          </div>
+          <textarea id="inputText" class="text-input" placeholder="Paste or type your text here..."></textarea>
+          <div class="input-controls">
+            <input type="file" id="fileInput" class="hidden" accept=".pdf,.txt">
+            <button onclick="document.getElementById('fileInput').click();">Upload File</button>
+            <button onclick="clearInput()">Clear</button>
+          </div>
+        </section>
+        
+        <section class="output-section">
+          <div class="slider-container">
+            <span>Summary Length:</span>
+            <input type="range" id="summaryLengthSlider" min="1" max="3" value="2">
+          </div>
+          <div id="loader" class="hidden">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+          </div>
+          <div>
+            <textarea id="summaryOutput" class="text-output" readonly placeholder="Summary will appear here..."></textarea>
+          </div>
+          <div class="output-controls">
+            <button id="summarize-btn">Summarize!</button>
+            <div class="extra-buttons">
+              <button id="copyBtn">📋</button>
+              <button id="downloadBtn">⬇️</button>
+            </div>
+          </div>
+          <div id="summaryStats">0 sentences  :  0 words</div>
+        </section>
+      </div>
+    </main>
+    
+    <footer class="footer">
+      <div>&copy; 2025 Data Summarizer. All rights reserved.</div>
+    </footer>
+  </div>
+  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const historyLink = document.querySelector("a[href='/history']");
+
+        if (historyLink) {
+            historyLink.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default navigation
+                
+                firebase.auth().currentUser?.getIdToken(true)
+                    .then(idToken => {
+                        return fetch("/history", {
+                            headers: {
+                                "Authorization": "Bearer " + idToken
+                            }
+                        });
+                    })
+                    .then(response => {
+                        if (response.status === 401) {
+                            alert("Unauthorized! Please log in to access history.");
+                        } else {
+                            window.location.href = "/history";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching history:", error);
+                    });
+            });
+        }
+    });
+</script>
+
+<script>
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      user.getIdToken().then(function (idToken) {
+        // Send ID token to Flask backend to create session
+        fetch('/sessionLogin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ idToken })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log("Session created successfully!");
+            // You may redirect if needed
+            // window.location.href = "/index";
+          } else {
+            console.error("Session creation failed.");
+          }
+        })
+        .catch(error => {
+          console.error("Error sending ID token to backend:", error);
+        });
+      });
+    }
+  });
+</script>
+
+    
+</body>
+</html>
